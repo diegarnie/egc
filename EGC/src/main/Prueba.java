@@ -6,7 +6,7 @@ public class Prueba {
 	
 	public static void main(String[] args) {
 		
-		Authority authority = new AuthorityImpl();
+Authority authority = new AuthorityImpl();
 		
 		authority.postKey(String.valueOf(1000));
 		authority.postKey(String.valueOf(999));
@@ -17,5 +17,11 @@ public class Prueba {
 		System.out.println(first);
 		System.out.println(third);
 		System.out.println(first.equals(second));
+		
+		
+		
+		/*DataBaseManager dbm=new DataBaseManager();
+		//dbm.getVoteFromDataBase("a1");
+		System.out.println(dbm.getPrivateKey("a1"));*/
 	}
 }

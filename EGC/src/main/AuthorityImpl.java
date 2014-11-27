@@ -1,19 +1,17 @@
 package main;
 
 import java.security.KeyPair;
-
 import java.security.KeyPairGenerator;
-import java.security.PublicKey;
 import java.security.SecureRandom;
-import java.util.HashMap;
-import Decoder.BASE64Encoder;
+
+
+import javax.xml.bind.DatatypeConverter;
 
 
 
 
 public class AuthorityImpl implements Authority{
 
-	private static HashMap<String, KeyPair> database = new HashMap<String, KeyPair>();
 	
 	public boolean postKey(String id) {
 		
@@ -27,7 +25,13 @@ public class AuthorityImpl implements Authority{
 			
 			 KeyPair pair = keyGen.generateKeyPair();
 			
-			 database.put(id, pair);
+			 
+			 String publicKey = DatatypeConverter.printBase64Binary(pair.getPublic().getEncoded());
+			 String privateKey= DatatypeConverter.printBase64Binary(pair.getPrivate().getEncoded());
+			 
+			 
+			 DataBaseManager dbm=new DataBaseManager();
+			 dbm.saveKeys(id, publicKey, privateKey);
 			
 
 		} catch (Exception e) {
@@ -41,28 +45,26 @@ public class AuthorityImpl implements Authority{
 
 	
 	public String getPublicKey(String id) {
-		KeyPair pair = database.get(id);
-		BASE64Encoder encoder = new BASE64Encoder();
+		DataBaseManager dbm=new DataBaseManager();
 		
-		return encoder.encode((pair.getPublic().getEncoded()));
+		return dbm.getPublicKey(id);
 	}
 
 	
 	public String getPrivateKey(String id) {
 
-		KeyPair pair = database.get(id);
-		BASE64Encoder encoder = new BASE64Encoder();
+		DataBaseManager dbm=new DataBaseManager();
 		
 		
-		return encoder.encode((pair.getPrivate().getEncoded()));
+		return dbm.getPrivateKey(id);
 	}
 
 	
 	public boolean checkVote(String votoCifrado, String id) {
 
-		
+		/*TODO*/
 		//Get the key
-		String key = getPublicKey(id);
+		//String key = getPublicKey(id);
 		
 		return false;
 
