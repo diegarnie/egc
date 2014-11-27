@@ -6,18 +6,26 @@ public class Prueba {
 	
 	public static void main(String[] args) {
 		
-Authority authority = new AuthorityImpl();
+		Authority authority = new AuthorityImpl();
 		
-		authority.postKey(String.valueOf(1000));
-		authority.postKey(String.valueOf(999));
+		if(authority.postKey(String.valueOf(1000))){
+			System.out.println("Guardado");
+		}
+		else{
+			System.out.println("Error al guardar");
+		}
+		if(authority.postKey(String.valueOf(999))){
+			System.out.println("Guardado");
+		}
+		else{
+			System.out.println("Error al guardar");
+		}
 		
-		String first = authority.getPrivateKey(String.valueOf(1000));
+		String first = authority.getPublicKey(String.valueOf(1000));
 		String second = authority.getPrivateKey(String.valueOf(999));
-		String third = authority.getPublicKey(String.valueOf(1000));
 		System.out.println(first);
-		System.out.println(third);
+		System.out.println(second);
 		System.out.println(first.equals(second));
-		
 		
 		
 		/*DataBaseManager dbm=new DataBaseManager();

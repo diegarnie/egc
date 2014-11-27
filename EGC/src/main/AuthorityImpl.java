@@ -14,7 +14,7 @@ public class AuthorityImpl implements Authority{
 
 	
 	public boolean postKey(String id) {
-		
+		boolean success = false;
 		try {
 
 			
@@ -30,8 +30,10 @@ public class AuthorityImpl implements Authority{
 			 String privateKey= DatatypeConverter.printBase64Binary(pair.getPrivate().getEncoded());
 			 
 			 
-			 DataBaseManager dbm=new DataBaseManager();
-			 dbm.saveKeys(id, publicKey, privateKey);
+			 RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
+			 if (rdbm.postKeys(id, publicKey, privateKey)){
+				 success = true;
+			 }
 			
 
 		} catch (Exception e) {
@@ -40,23 +42,23 @@ public class AuthorityImpl implements Authority{
 
 	
 		
-		return false;
+		return success;
 	}
 
 	
 	public String getPublicKey(String id) {
-		DataBaseManager dbm=new DataBaseManager();
+		RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
 		
-		return dbm.getPublicKey(id);
+		return rdbm.getPublicKey(id);
 	}
 
 	
 	public String getPrivateKey(String id) {
 
-		DataBaseManager dbm=new DataBaseManager();
+		RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
 		
 		
-		return dbm.getPrivateKey(id);
+		return rdbm.getPrivateKey(id);
 	}
 
 	
