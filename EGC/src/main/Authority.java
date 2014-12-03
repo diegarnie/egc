@@ -1,5 +1,7 @@
 package main;
 
+import javax.crypto.BadPaddingException;
+
 public interface Authority {
 	
 	//Recibe la id de la votación, crea las claves y las guarda en BD.
@@ -12,6 +14,12 @@ public interface Authority {
 	public String getPrivateKey(String id);
 	
 	//Recibe un voto cifrado y un id de la votación, y comprueba si ese voto ha sido alterado.
-	public boolean checkVote(String votoCifrado, String id);
+	public boolean checkVote(byte[] votoCifrado, String id);
+	
+	//Encripta el texto con la clave pública de la votación cuya id se pasa como parámetro.
+	public byte[] encrypt(String idVote,String textToEncypt);
+	
+	//Desencripta el texto con la clave privada de la votación cuya id se pasa como parámetro.	
+	public String decrypt(String idVote,byte[] cipherText) throws BadPaddingException;
 
 }
