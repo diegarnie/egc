@@ -34,7 +34,7 @@ public class AuthorityImpl implements Authority{
 			 KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
 			
 			 SecureRandom random = SecureRandom.getInstance("SHA1PRNG","SUN");
-			 keyGen.initialize(1024, random);
+			 keyGen.initialize(2048, random);
 			
 			 KeyPair pair = keyGen.generateKeyPair();
 			
