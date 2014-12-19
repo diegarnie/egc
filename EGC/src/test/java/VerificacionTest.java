@@ -28,7 +28,7 @@ public class VerificacionTest {
 	@Test
 	public void test1() {
 		String publicKey = au.getPublicKey(String.valueOf(1000));
-		Assert.assertEquals("MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA06b4WdqpKC77rx3xIkdPD0g4cJ5BixkdylE+0peLK65gOa994fYtP4+SGh1yMDFWmdHgQrn6v7qFCJhSsl6aF4dlOcJTomfeXxwYDH5Ofnwb4wvhGXcZxROP522EQWYaFY0aeQR3sjXkpOCt7espQL6HfVLIWNn/QopQxGMXdKnY7IUFuQzPKczfuBTxMmLK/8mfZ9ii19IvfnX7mFUbm6T/Sn8fmrVm757RONfBklSVF7IF+sCYOTocnmF91+erUWyCbD665f8M/xYzlcKy+ztQ3Gf/ntnkPa8v3F72r0rfSTaGZnPFKNB3MRzw/B8lLJ2jhwoZ044ItI/53mGuLQIDAQAB", publicKey);
+		Assert.assertEquals(" MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA06b4WdqpKC77rx3xIkdPD0g4cJ5BixkdylE+0peLK65gOa994fYtP4+SGh1yMDFWmdHgQrn6v7qFCJhSsl6aF4dlOcJTomfeXxwYDH5Ofnwb4wvhGXcZxROP522EQWYaFY0aeQR3sjXkpOCt7espQL6HfVLIWNn/QopQxGMXdKnY7IUFuQzPKczfuBTxMmLK/8mfZ9ii19IvfnX7mFUbm6T/Sn8fmrVm757RONfBklSVF7IF+sCYOTocnmF91+erUWyCbD665f8M/xYzlcKy+ztQ3Gf/ntnkPa8v3F72r0rfSTaGZnPFKNB3MRzw/B8lLJ2jhwoZ044ItI/53mGuLQIDAQAB", publicKey);
 
 	}
 
