@@ -1,4 +1,4 @@
-package main;
+package main.java;
 
 import javax.crypto.BadPaddingException;
 

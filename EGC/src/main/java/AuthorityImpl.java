@@ -1,4 +1,4 @@
-package main;
+package main.java;
 
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
