@@ -3,6 +3,8 @@ package test.java;
 
 import java.util.Random;
 
+import javax.crypto.BadPaddingException;
+
 import junit.framework.Assert;
 
 import main.java.Authority;
@@ -73,6 +75,20 @@ public class VerificacionTest {
 		}
 		
 		Assert.assertTrue(au.postKey(id));
+		
+	}
+	//En este test se cifra y se descifra una cadena con formato voto
+	@Test
+	public void test6() {
+		String texto = "{\"age\": \"24\",\"answers\":[{\"question\":\"Pregunta 1\",\"answer_question\":\"SI\"}],\"id\": 1,\"autonomous_community\":\"Andalucía\",\"genere\": \"Masculino\",\"id_poll\": 32778";
+		byte[] cifrado = au.encrypt("1000", texto);
+		String descifrado=null;
+		try {
+			descifrado = au.decrypt("1000", cifrado);
+		} catch (BadPaddingException e) {
+			e.printStackTrace();
+		}
+		Assert.assertEquals(texto, descifrado);
 		
 	}
 	
