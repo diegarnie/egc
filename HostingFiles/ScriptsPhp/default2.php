@@ -4,14 +4,6 @@ $host = $_SERVER['HTTP_HOST'];
 setlocale(LC_TIME, "es_ES.utf8");
 date_default_timezone_set('Europe/Madrid');
 
-/*
-Directory Listing Script - Version 2
-====================================
-Script Author: Ash Young <ash@evoluted.net>. www.evoluted.net
-Layout: Manny <manny@tenka.co.uk>. www.tenka.co.uk
-*/
-
-
 ?>
 <?
 if (isset($_REQUEST['id'])){
