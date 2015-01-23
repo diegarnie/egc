@@ -48,6 +48,42 @@ public class RemoteDataBaseManager {
 		
 		return success;
 	}
+	public boolean postAESKey(String id, String secretKey){
+		boolean success = false;
+		try {
+			
+			id = URLEncoder.encode(id, "UTF-8");
+			secretKey = URLEncoder.encode(secretKey, "UTF-8");
+	        URL url;
+			
+			url = new URL("http://egcprueba.esy.es/AESdefault2.php");
+			
+	        URLConnection connection = url.openConnection();
+	        connection.setDoOutput(true);
+	
+	        OutputStreamWriter out = new OutputStreamWriter(connection.getOutputStream());
+	        
+	        out.write("id=" + id+"&");
+	        out.write("secretKey=" + secretKey);
+	        out.close();
+	
+	        BufferedReader in = new BufferedReader(new InputStreamReader( connection.getInputStream()));
+	        String decodedString;
+	        String fullText="";
+	        while ((decodedString = in.readLine()) != null) {
+	        	fullText+=decodedString;
+	        }
+	        in.close();
+	        success = fullText.contains("New record created successfully");
+	        
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return success;
+	}
 	
 	public String readPage(String id){
 		BufferedReader in = null;

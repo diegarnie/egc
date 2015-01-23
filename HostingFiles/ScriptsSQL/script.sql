@@ -19,6 +19,10 @@ CREATE TABLE `keysvotes` (
 `publicKey` VARCHAR(2048) NOT NULL,
 `privateKey` VARCHAR(2048) NOT NULL
 );
+CREATE TABLE `keysvotesAES` (
+`idvotation` VARCHAR(128) UNIQUE NOT NULL,
+`secretKey` VARCHAR(256) NOT NULL
+);
 
 
 /*commit;*/
