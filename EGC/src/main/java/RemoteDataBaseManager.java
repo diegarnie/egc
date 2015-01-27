@@ -85,15 +85,20 @@ public class RemoteDataBaseManager {
 		return success;
 	}
 	
-	public String readPage(String id){
+	public String readPage(String id, String method){
 		BufferedReader in = null;
 		URL url = null;
 		String linea;
 		String textoPagina="";
 
 		try{
+			if (method == "AES"){
+				url = new URL("http://egcprueba.esy.es/AESdefault.php?id="+id);
+			}
+			else{
+				url = new URL("http://egcprueba.esy.es/default.php?id="+id);
+			}
 			
-			url = new URL("http://egcprueba.esy.es/default.php?id="+id);
 		}
 		catch (MalformedURLException e){
 			
@@ -124,8 +129,20 @@ public class RemoteDataBaseManager {
 		return textoPagina;
 	}
 	
+	public String getSecretKey(String id){
+		String fullPage = readPage(id,"AES");
+		String res = "";
+		
+		for(int j = fullPage.indexOf("Secretkey:") + 10; fullPage.charAt(j)!='<' && j< fullPage.length() ;j++){
+			
+			res += fullPage.charAt(j);
+		}
+		
+		return res;
+	}
+	
 	public String getPublicKey(String id){
-		String fullPage = readPage(id);
+		String fullPage = readPage(id,"RSA");
 		String res = "";
 		
 		for(int j = fullPage.indexOf("Publickey: ") + 10; fullPage.charAt(j)!='<' && j< fullPage.length() ;j++){
@@ -137,7 +154,7 @@ public class RemoteDataBaseManager {
 	}
 	
 	public String getPrivateKey(String id){
-		String fullPage = readPage(id);
+		String fullPage = readPage(id,"RSA");
 		String res = "";
 		
 		for(int j = fullPage.indexOf("Privatekey: ") + 11; fullPage.charAt(j)!='<' && j< fullPage.length() ;j++){
