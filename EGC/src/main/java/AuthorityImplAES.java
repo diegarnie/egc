@@ -1,6 +1,7 @@
 package main.java;
 
 import java.security.MessageDigest;
+import java.util.Arrays;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -47,7 +48,36 @@ public class AuthorityImplAES{
 
 	public boolean checkVote(byte[] votoCifrado, String id) {
 		// TODO Auto-generated method stub
-		return false;
+		AuthorityImplAES authority = new AuthorityImplAES();
+		String secretKey = authority.getSecretKey(id);
+		Boolean res = null;
+		   
+		SecretKeySpec key = new SecretKeySpec(DatatypeConverter.parseBase64Binary(secretKey), "AES");
+	  	Cipher cipher;
+	  	try {
+	  		cipher = Cipher.getInstance("AES");
+		    
+	  		cipher.init(Cipher.DECRYPT_MODE, key);
+	  		byte[] resByte = cipher.doFinal(votoCifrado);
+	  		byte[] hash = new byte[16];
+	  		byte[] originalText = new byte[resByte.length - hash.length];
+	  		System.arraycopy(resByte, 0, originalText, 0, originalText.length);
+	  		System.arraycopy(resByte, originalText.length, hash, 0, hash.length);
+	  		
+	  		MessageDigest md;
+			
+			md = MessageDigest.getInstance("MD5");
+			
+			byte[] newHash = md.digest(originalText);
+			
+			res = Arrays.equals(hash, newHash);
+		 
+
+	  	}
+	  	catch (Exception e) {
+			e.printStackTrace();
+		}
+		return res;
 	}
 
 	
