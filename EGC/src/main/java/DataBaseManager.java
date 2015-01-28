@@ -13,16 +13,14 @@ import java.util.Collection;
  */
 public class DataBaseManager {
 
-	private Connection con = null;
     private Statement st = null;
     private ResultSet rs = null;
     
 	public Collection<String> getVoteFromDataBase(String id) {
-
+		Connection conection = null;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		String url = "jdbc:mysql://localhost:3306/keysvotes";
@@ -33,14 +31,15 @@ public class DataBaseManager {
         Collection<String> result = null;
         
         try {
-            con = DriverManager.getConnection(url, user, password);
-            st = con.createStatement();
+        	conection = DriverManager.getConnection(url, user, password);
+            st = conection.createStatement();
             rs = st.executeQuery("SELECT publicKey, privateKey FROM KeysVotes  WHERE idVotation = '"+id2+"'");
 
             if (rs.next()) {
                 System.out.println(rs.getString(1));
             }
 
+            conection.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
 
@@ -50,7 +49,7 @@ public class DataBaseManager {
     }
 
 	/**
-	 * Método que créa el objeto Connection con los parámetros de conexión adecuados.
+	 * Función que crea el objeto Connection con los parámetros de conexión adecuados.
 	 * @return objeto Connection preparado para conectar con la base de datos local.
 	 */
 	public Connection getConnection() {
@@ -73,7 +72,7 @@ public class DataBaseManager {
 		return con;
 	}
 	/**
-	 * Método que obtiene la clave pública de una votación desde la base de datos local.
+	 * Función que obtiene la clave pública de una votación desde la base de datos local.
 	 * @param id La id de la votación de la cual se desea obtener la clave pública
 	 * @return la clave pública asociada a la id.
 	 */
@@ -91,6 +90,8 @@ public class DataBaseManager {
                 res = rs.getString(1);
             }
 
+            //Cerramos la conexión
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
 
@@ -100,7 +101,7 @@ public class DataBaseManager {
     }
 	
 	/**
-	 * Método que obtiene la clave privada de una votación desde la base de datos local.
+	 * Función que obtiene la clave privada de una votación desde la base de datos local.
 	 * @param id La id de la votación de la cual se desea obtener la clave privada
 	 * @return la clave privada asociada a la id.
 	 */
@@ -118,7 +119,9 @@ public class DataBaseManager {
             if (rs.next()) {
                 res = rs.getString(1);
             }
-
+            
+            //Cerramos la conexión
+            con.close();
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
 
@@ -128,7 +131,7 @@ public class DataBaseManager {
     }
 	
 	/**
-	 * Método usado para guardar un par de claves asocidadas a una id en la base de datos local
+	 * Función usada para guardar un par de claves asocidadas a una id en la base de datos local
 	 * @param id La id de la votación.
 	 * @param publicKey Clave pública que desea guardarse asociada a la votación.
 	 * @param privateKey Clave privada que desea guardarse asociada a la votación.
@@ -141,7 +144,9 @@ public class DataBaseManager {
             //Creamos la sentencia SQL para guardar las claves en la base de datos
         	st = con.createStatement();
             st.execute("Insert into keysVotes Values('"+id+"', '" + publicKey + "', '" + privateKey + "' ) ");
-            
+          
+            //Cerramos la conexión
+            con.close();
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());

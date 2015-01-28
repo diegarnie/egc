@@ -12,7 +12,7 @@ import java.net.URLEncoder;
 public class RemoteDataBaseManager {
 	
 	/**
-	 * Método que almacena en la base de datos remota un par de claves de cifrado RSA
+	 * Función que almacena en la base de datos remota un par de claves de cifrado RSA
 	 * asociadas a una votación
 	 * @param id La ide de la votación.
 	 * @param publicKey La clave pública de cifrado asociada a la votación
@@ -64,7 +64,7 @@ public class RemoteDataBaseManager {
 		return success;
 	}
 	/**
-	 * Método que almacena en la base de datos una clave de cifrado que se usará
+	 * Función que almacena en la base de datos una clave de cifrado que se usará
 	 * con el algoritmo AES.
 	 * @param id La id de la votación asociada a la clave de cifrado
 	 * @param secretKey Clave de cifrado a almacenar
@@ -113,7 +113,7 @@ public class RemoteDataBaseManager {
 		return success;
 	}
 	/**
-	 * Método para leer los valores de las claves de cifrado asociadas a una votación.
+	 * Función para leer los valores de las claves de cifrado asociadas a una votación.
 	 * @param id La id de la votación cuyas claves queremos consultar
 	 * @param method Variable que indica si se quieren consultar las claves RSA o la clave AES
 	 * @return Cadena de texto con el resultado de la petición HTTP
@@ -127,15 +127,13 @@ public class RemoteDataBaseManager {
 		//Hacemos una petición HTTP a una URL cuyo resultado podrá ser analizado
 		// posteriormente para extraer las claves RSA o la clave AES
 		try{
-			if (method == "AES"){
+			if (method.equals("AES")){
 				url = new URL("http://egcprueba.esy.es/AESdefault.php?id="+id);
-			}
-			else{
+			}else{
 				url = new URL("http://egcprueba.esy.es/default.php?id="+id);
 			}
 			
-		}
-		catch (MalformedURLException e){
+		}catch (MalformedURLException e){
 			
 			e.printStackTrace();
 		}
@@ -144,8 +142,7 @@ public class RemoteDataBaseManager {
 		try{
 			
 			in = new BufferedReader(new InputStreamReader(url.openStream()));
-		}
-		catch(IOException e){
+		}catch(IOException e){
 			
 			e.printStackTrace();
 		}
@@ -154,9 +151,8 @@ public class RemoteDataBaseManager {
 			while ((linea = in.readLine()) != null) {
 			     textoPagina = textoPagina + linea;
 			}
-		}
-		catch(IOException e){
-			
+		}catch(IOException e){
+		
 			e.printStackTrace();
 		}
 		
@@ -164,7 +160,7 @@ public class RemoteDataBaseManager {
 		return textoPagina;
 	}
 	/**
-	 * Método usado para obtener la clave de cifrado AES asociada a una votación.
+	 * Función usada para obtener la clave de cifrado AES asociada a una votación.
 	 * @param id La id de la votación cuya clave de cifrado AES queremos conocer
 	 * @return La clave de cifrado AES asociada a una votación
 	 */
@@ -172,8 +168,8 @@ public class RemoteDataBaseManager {
 		String fullPage = readPage(id,"AES");
 		String res = "";
 		
-		//En el bucle se extrae el valor de la clave analizando el resultado de llamar al
-		// método readPage.
+		//En el bucle se extrae el valor de la clave analizando el resultado de llamar a la
+		// función readPage.
 		for(int j = fullPage.indexOf("Secretkey:") + 10; fullPage.charAt(j)!='<' && j< fullPage.length() ;j++){
 			
 			res += fullPage.charAt(j);
@@ -183,7 +179,7 @@ public class RemoteDataBaseManager {
 	}
 	
 	/**
-	 * Método usado para obtener la clave pública RSA asociada a una votación.
+	 * Función usada para obtener la clave pública RSA asociada a una votación.
 	 * @param id La id de la votación cuya clave pública RSA queremos conocer
 	 * @return La clave pública asociada a una votación
 	 */
@@ -191,8 +187,8 @@ public class RemoteDataBaseManager {
 		String fullPage = readPage(id,"RSA");
 		String res = "";
 		
-		//En el bucle se extrae el valor de la clave analizando el resultado de llamar al
-		// método readPage.
+		//En el bucle se extrae el valor de la clave analizando el resultado de llamar a la
+		// función readPage.
 		for(int j = fullPage.indexOf("Publickey: ") + 10; fullPage.charAt(j)!='<' && j< fullPage.length() ;j++){
 			
 			res += fullPage.charAt(j);
@@ -202,7 +198,7 @@ public class RemoteDataBaseManager {
 	}
 	
 	/**
-	 * Método usado para obtener la clave privada RSA asociada a una votación.
+	 * Función usada para obtener la clave privada RSA asociada a una votación.
 	 * @param id La id de la votación cuya clave privada RSA queremos conocer
 	 * @return La clave privada asociada a una votación
 	 */
@@ -210,8 +206,8 @@ public class RemoteDataBaseManager {
 		String fullPage = readPage(id,"RSA");
 		String res = "";
 		
-		//En el bucle se extrae el valor de la clave analizando el resultado de llamar al
-		// método readPage.
+		//En el bucle se extrae el valor de la clave analizando el resultado de llamar a la
+		// función readPage.
 		for(int j = fullPage.indexOf("Privatekey: ") + 11; fullPage.charAt(j)!='<' && j< fullPage.length() ;j++){
 			
 			res += fullPage.charAt(j);

@@ -12,8 +12,8 @@ import javax.xml.bind.DatatypeConverter;
 public class AuthorityImplAES{
 
 	/**
-	 * Este método es usado para crear una clave de cifrado AES de 256 bits y almacenarla
-	 * en una base de datos en Hostinger. El método creará la clave siempre
+	 * Esta función es usada para crear una clave de cifrado AES de 256 bits y almacenarla
+	 * en una base de datos en Hostinger. La función creará la clave siempre
 	 * que no exista ya una entrada en la base de datos para la misma votación.
 	 * @param id. El parámetro id se refiere a la id de la votación a la que se le asociará
 	 * la clave.
@@ -32,7 +32,7 @@ public class AuthorityImplAES{
 			//Convertimos la clave a Base64. 
 			String secretKeyString = DatatypeConverter.printBase64Binary(secretKey.getEncoded());
 			 
-			//Llamamos al método para almacenar la clave de cifrado en la base de datos
+			//Llamamos a la función para almacenar la clave de cifrado en la base de datos
 			// de hostinger.
 			RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
 			if (rdbm.postAESKey(id, secretKeyString)){
@@ -50,20 +50,20 @@ public class AuthorityImplAES{
 	}
 	
 	/**
-	 * Método que obtiene la clave de cifrado AES asociada a una votación
+	 * Función que obtiene la clave de cifrado AES asociada a una votación
 	 * @param id La id de la votación cuya clave desea conocerse
 	 * @return La clave de cifrado asociada a la votación
 	 */
 	public String getSecretKey(String id) {
 		RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
 		
-		//Llamamos al método que conecta con la base de datos remota y devuelve
+		//Llamamos a la función que conecta con la base de datos remota y devuelve
 		// el valor de la clave asociada a la votación.
 		return rdbm.getSecretKey(id);
 	}
 
 	/**
-	 * Método que comprueba que un voto cifrado mediante AES no ha sido modificado.
+	 * Función que comprueba que un voto cifrado mediante AES no ha sido modificado.
 	 * Para ello, es necesario que antes de cifrar dicho voto, se le añada al final del voto
 	 * el resultado de calcula su código Hash mediante el algoritmo md5.
 	 * @param votoCifrado El voto que se quiere comprobar si ha sido modificado o no. Debe incluir
@@ -72,7 +72,6 @@ public class AuthorityImplAES{
 	 * @return
 	 */
 	public boolean checkVote(byte[] votoCifrado, String id) {
-		// TODO Auto-generated method stub
 		AuthorityImplAES authority = new AuthorityImplAES();
 		//Obtenemos la clave de la base de datos
 		String secretKey = authority.getSecretKey(id);
@@ -107,15 +106,14 @@ public class AuthorityImplAES{
 			res = Arrays.equals(hash, newHash);
 		 
 
-	  	}
-	  	catch (Exception e) {
+	  	}catch (Exception e) {
 			e.printStackTrace();
 		}
 		return res;
 	}
 
 	/**
-	 * Método que cifra un texto usando el algoritmo AES y la clave de cifrado asociada a 
+	 * Ffunción que cifra un texto usando el algoritmo AES y la clave de cifrado asociada a 
 	 * la votación cuyo parámetro se recibe. También presenta la opción de añadir
 	 * el código hash del texto justo detrás antes de cifrar.
 	 * @param idVote La id de la votación cuya clave se quiere usar para el cifrado
@@ -147,11 +145,9 @@ public class AuthorityImplAES{
 		  		System.arraycopy(bytesOfMessage, 0, bytesToEcrypt, 0, bytesOfMessage.length);
 		  		System.arraycopy(theDigest, 0, bytesToEcrypt, bytesOfMessage.length, theDigest.length);
 		  		
-				
-	  		}
-	  		//Si no está activada la opctión de añadir el hash, ciframos el texto
-	  		// original tal y como se recibe.
-	  		else{
+		  	//Si no está activada la opctión de añadir el hash, ciframos el texto
+		  	// original tal y como se recibe.	
+	  		}else{
 	  			bytesToEcrypt = bytesOfMessage;
 	  		}
 	  		cipher = Cipher.getInstance("AES");
@@ -162,8 +158,7 @@ public class AuthorityImplAES{
 	  		res = cipher.doFinal(bytesToEcrypt);
 		 
 
-	  	}
-	  	catch (Exception e) {
+	  	}catch (Exception e) {
 	  		e.printStackTrace();
 		}
 		
@@ -171,7 +166,7 @@ public class AuthorityImplAES{
 	}
 
 	/**
-	 * Método que descifra un texto usando el algoritmo AES y la clave de cifrado asociada
+	 * Función que descifra un texto usando el algoritmo AES y la clave de cifrado asociada
 	 * a la votación que se recibe como parámetro. También retirá el código hash de la parte
 	 * final del mensaje en el caso de que se le indique.
 	 * @param idVote La id de la votación cuya clave desea usarse para descifrar.
@@ -199,15 +194,13 @@ public class AuthorityImplAES{
 	  			byte[] originalText = new byte[resByte.length - 16];
 	  			System.arraycopy(resByte, 0, originalText, 0, originalText.length);
 	  			res = new String (originalText);
-	  		}
-	  		else{
+	  		}else{
 	  			res = new String(resByte);
 	  		}
 	  		 
 		 
 
-	  	}
-	  	catch (Exception e) {
+	  	}catch (Exception e) {
 			e.printStackTrace();
 		}
 		

@@ -10,22 +10,13 @@ import junit.framework.Assert;
 import main.java.Authority;
 import main.java.AuthorityImpl;
 
-import org.junit.After;
-import org.junit.Before;
+
 import org.junit.Test;
 
 public class VerificacionTest {
 	
 	Authority au = new AuthorityImpl();
 	
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
 	//Este primer test consiste en recuperar una clave publica de una votacion existente
 	@Test
 	public void test1() {
@@ -69,7 +60,7 @@ public class VerificacionTest {
 		
 		String publicKey = au.getPublicKey(id);
 		
-		while (!publicKey.equals(" ")){
+		while (!" ".equals(publicKey)){
 			
 			id = String.valueOf(r.nextInt(1000000000)+ String.valueOf(r.nextInt(1000000000)));
 		}

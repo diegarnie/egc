@@ -27,8 +27,8 @@ public class AuthorityImpl implements Authority{
 
 
 	/**
-	 * Este método es usado para crear un par de claves de cifrado RSA y almacenarlas
-	 * en una base de datos en Hostinger. El método creará el par de claves siempre
+	 * Esta función es usada para crear un par de claves de cifrado RSA y almacenarlas
+	 * en una base de datos en Hostinger. La función creará el par de claves siempre
 	 * que no exista ya una entrada en la base de datos para la misma votación.
 	 * @param id. El parámetro id se refiere a la id de la votación a la que se le asociará
 	 * el par de claves.
@@ -53,7 +53,7 @@ public class AuthorityImpl implements Authority{
 			 
 			 
 			 RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
-			 //Llamamos al método que se encarga de guardar el par de claves asociadas
+			 //Llamamos a la función que se encarga de guardar el par de claves asociadas
 			 // a la votación cuya id se especifica como parámetro.
 			 if (rdbm.postKeys(id, publicKey, privateKey)){
 				 success = true;
@@ -70,18 +70,18 @@ public class AuthorityImpl implements Authority{
 	}
 
 	/**
-	 * Este método obtiene la clave pública RSA de una votación que exista en la base de datos.
+	 * Esta función obtiene la clave pública RSA de una votación que exista en la base de datos.
 	 * @param id. Corresponde al id de la votación
 	 * @return String que contiene la clave pública
 	 */
 	public String getPublicKey(String id) {
 		RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
-		//Llamamos al método que conecta con la base de datos remota y obtiene la clave pública.
+		//Llamamos a la función que conecta con la base de datos remota y obtiene la clave pública.
 		return rdbm.getPublicKey(id);
 	}
 
 	/**
-	 * Este método obtiene la clave privada RSA de una votación que exista en la base de datos.
+	 * Esta función obtiene la clave privada RSA de una votación que exista en la base de datos.
 	 * @param id. Corresponde al id de la votación
 	 * @return String que contiene la clave privada
 	 */
@@ -89,12 +89,12 @@ public class AuthorityImpl implements Authority{
 
 		RemoteDataBaseManager rdbm=new RemoteDataBaseManager();
 		
-		//Llamamos al método que conecta con la base de datos remota y obtiene la clave privada.
+		//Llamamos a la función que conecta con la base de datos remota y obtiene la clave privada.
 		return rdbm.getPrivateKey(id);
 	}
 
 	/**
-	 * Método que comprueba que un voto no ha sido modificado.
+	 * Función que comprueba que un voto no ha sido modificado.
 	 * @param votoCifrado. Corresponde con el voto cifrado mediante el algoritmo RSA
 	 * @param id. Corresponde a la id de la votación.
 	 * @return boolean que indica si la comprobación ha sido correcta o no. Si 
@@ -114,7 +114,7 @@ public class AuthorityImpl implements Authority{
 	}
 
 	/**
-	 * Método que cifra mediante RSA una cadena de texto con la clave pública de la votación 
+	 * Función que cifra mediante RSA una cadena de texto con la clave pública de la votación 
 	 * asociada a la id de votación enviada como parámetro.
 	 * @param idVote. La id de la votación cuya clave pública queremos usar para cifrar.
 	 * @param textToEncrypt. El texto que deseamos cifrar.
@@ -146,7 +146,7 @@ public class AuthorityImpl implements Authority{
 	}
 	
 	/**
-	 * Método que descifra mediante RSA un array de byte usando la clave privada asociada a la votación
+	 * Función que descifra mediante RSA un array de byte usando la clave privada asociada a la votación
 	 * cuyo id se pasa como parámetro. Lanza una excepción que nos ayudará a comprobar si 
 	 * el voto ha sido modificado.
 	 * @param idVote. La id de la votación cuya clave privada queremos usar para descifrar.
