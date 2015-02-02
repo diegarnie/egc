@@ -24,7 +24,7 @@ $db="u602876340_egc";
 $con=mysql_connect($server,$user,$pass);
 mysql_select_db($db, $con);
 $result = mysql_query("SELECT * FROM keysvotesAES where idvotation ='".$idv."'", $con);
-echo "Secretkey: ".mysql_result($result, 0, "secretKey")."<br>";
+echo "Secretkey:".mysql_result($result, 0, "secretKey")."<br>";
 
 mysql_close($con);
 ?>
